@@ -1,8 +1,9 @@
-# app.py
 import streamlit as st
 import requests
 import json
 import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 
 import subprocess
 import time
@@ -103,6 +104,46 @@ if indices_to_delete:
     
     # 削除後に画面を再実行
     st.rerun()
+
+# --- 2.5 リアルタイム・レイアウトプレビュー ---
+st.header("現在のレイアウト確認")
+
+# グラフの作成
+fig, ax = plt.subplots(figsize=(6, 6))
+ax.set_xlim(-0.5, room_width + 0.5)
+ax.set_ylim(-0.5, room_depth + 0.5)
+ax.set_aspect('equal')
+ax.grid(True, linestyle='--', alpha=0.6)
+
+# 部屋の壁を描画
+room_rect = patches.Rectangle((0, 0), room_width, room_depth, fill=False, edgecolor='black', lw=4)
+ax.add_patch(room_rect)
+
+# 家具を描画
+for f in furniture_inputs:
+    # 四角形の左下座標を計算（中心座標からサイズ分引く）
+    # 回転を考慮するため、あえて patches.Rectangle の rotation を使用
+    rect = patches.Rectangle(
+        (f['x'] - f['width']/2, f['y'] - f['depth']/2), 
+        f['width'], f['depth'], 
+        angle=f['rotation'], 
+        rotation_point='center',
+        alpha=0.6, 
+        facecolor='#1f77b4', 
+        edgecolor='white',
+        label=f['name']
+    )
+    ax.add_patch(rect)
+    
+    # 家具の名前を表示
+    ax.text(f['x'], f['y'], f['name'], ha='center', va='center', fontsize=9, fontweight='bold')
+
+# ドアと窓の簡易表示（位置固定）
+ax.plot([room_width/2], [0], 'rs', markersize=10, label="Door") # Door
+ax.plot([room_width/2], [room_depth], 'gs', markersize=10, label="Window") # Window
+
+st.pyplot(fig)
+st.caption("※ 青いボックスが家具、赤がドア、緑が窓です。スライダーを動かすとリアルタイムで更新されます。")
 
 # --- 3. 診断ボタン ---
 st.markdown("---")
