@@ -1,0 +1,9 @@
+カラム名	データ型	説明			備考
+id		Integer		プライマリキー
+user_id		Integer		ユーザーID
+name		String		部屋の名前
+width		Float		部屋の幅(m)		必須
+depth		Float		部屋の奥行(m)		必須
+height		Float		部屋の高さ(m)
+door_position	String		ドアの位置・寸法情報	JSON形式で格納予定
+window_position	String		窓の位置・寸法情報	JSON形式で格納予定

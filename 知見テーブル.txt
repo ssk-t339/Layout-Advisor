@@ -1,0 +1,7 @@
+カラム名	データ型	説明			備考
+id		Integer		プライマリキー
+category	String		対象とする家具カテゴリ	必須
+clearance_type	String		クリアランスの種類
+min_distance	Float		必要な最小距離		必須
+direction	String		距離が必要な方向
+justification	String		知見の根拠

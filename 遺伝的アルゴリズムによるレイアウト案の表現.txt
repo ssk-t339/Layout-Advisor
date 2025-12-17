@@ -1,0 +1,5 @@
+属性		意味		範囲			備考
+x		中心のX座標	0≦x≦Room Width	連続値
+y		中心のY座標	0≦y≦Room Depth	連続値
+rotation	回転角度	0°,90°,180°,270°	離散値(4方向のみを許容)
+furniture_id	元の家具ID	整数			どの家具に対応するか

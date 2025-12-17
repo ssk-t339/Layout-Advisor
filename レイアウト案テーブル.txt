@@ -1,0 +1,7 @@
+カラム名		データ型	説明				備考
+id			Integer		プライマリキー
+room_id			Integer		どの部屋に対する提案か		Roomテーブルへの外部キー
+proposal_number		Integer		提案番号
+furniture_layout	String		各家具の配置座標情報		JSON形式で格納
+score			Float		提案の評価スコア		レイアウトの最適さを数値化
+reasoning		String		AIによる提案の根拠(テキスト)

@@ -1,0 +1,9 @@
+カラム名	データ型	説明			備考
+id		Integer		プライマリキー
+user_id		Integer		ユーザーID
+name		String		家具名			必須
+category	String		家具カテゴリ		必須
+width		Float		家具の幅(m)		必須
+depth		Float		家具の奥行き(m)		必須
+height		Float		家具の高さ(m)
+is_fixed	Boolean		移動負荷の家具かどうか
