@@ -10,3 +10,5 @@
 ・入力された情報とともにAIに渡すプロンプト内容
 ・人間工学や心理学的知見(レイアウトによる心理的影響)
 ・設計等建築学的知見(論理的根拠に基づくレイアウトの正確性)
+ページURL
+https://layout-advisor-krs7ghgq2nydgm2uqjnmtj.streamlit.app/
