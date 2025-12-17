@@ -29,13 +29,11 @@ class DiagnosisRequest(BaseModel):
 
 class Room:
     # 引数を座標(x, y)を受け取る形式に変更
-    def __init__(self, width: float, depth: float, door_x: float, door_y: float, window_x: float, window_y: float):
+    def __init__(self, width: float, depth: float, door_positions: List[List[float]], window_positions: List[List[float]]):
         self.width = width
         self.depth = depth
-        self.door_x = door_x
-        self.door_y = door_y
-        self.window_x = window_x
-        self.window_y = window_y
+        self.door_positions = door_positions  # [[x, y], ...]
+        self.window_positions = window_positions # [[x, y], ...]
 
 class PlacedFurniture:
     def __init__(self, item: PlacedFurnitureInput):

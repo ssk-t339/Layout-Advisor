@@ -20,10 +20,8 @@ def diagnose_layout(request: DiagnosisRequest):
         room = Room(
             width=request.room.width,
             depth=request.room.depth,
-            door_x=request.room.door_positions[0][0],
-            door_y=request.room.door_positions[0][1],
-            window_x=request.room.window_positions[0][0],
-            window_y=request.room.window_positions[0][1]
+            door_positions=request.room.door_positions,   # リストを渡す
+            window_positions=request.room.window_positions # リストを渡す
         )
         
         placed_items = [PlacedFurniture(item) for item in request.placed_furniture_list]

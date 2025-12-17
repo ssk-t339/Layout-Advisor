@@ -28,19 +28,22 @@ room_width = col_w.slider("部屋の横幅 (Width)", 3.0, 8.0, 4.0, 0.1)
 room_depth = col_d.slider("部屋の奥行 (Depth)", 3.0, 8.0, 5.0, 0.1)
 
 st.markdown("🔧 **建具の位置設定** (壁沿いに配置してください)")
-c_door, c_win = st.columns(2)
+num_doors = st.sidebar.number_input("ドアの数", 1, 3, 1)
+num_windows = st.sidebar.number_input("窓の数", 1, 3, 1)
 
-# ドアの位置（初期値：中央下）
-with c_door:
-    st.write("🚪 ドアの位置")
-    door_x = st.slider("ドア X座標", 0.0, room_width, room_width/2, 0.1)
-    door_y = st.slider("ドア Y座標", 0.0, room_depth, 0.0, 0.1)
+door_positions = []
+for i in range(num_doors):
+    with st.sidebar.expander(f"ドア {i+1} の位置"):
+        dx = st.slider(f"X座標", 0.0, room_width, room_width/2, 0.1, key=f"dx{i}")
+        dy = st.slider(f"Y座標", 0.0, room_depth, 0.0, 0.1, key=f"dy{i}")
+        door_positions.append([dx, dy])
 
-# 窓の位置（初期値：中央上）
-with c_win:
-    st.write("🪟 窓の位置")
-    win_x = st.slider("窓 X座標", 0.0, room_width, room_width/2, 0.1)
-    win_y = st.slider("窓 Y座標", 0.0, room_depth, room_depth, 0.1)
+window_positions = []
+for i in range(num_windows):
+    with st.sidebar.expander(f"窓 {i+1} の位置"):
+        wx = st.slider(f"X座標", 0.0, room_width, room_width/2, 0.1, key=f"wx{i}")
+        wy = st.slider(f"Y座標", 0.0, room_depth, room_depth, 0.1, key=f"wy{i}")
+        window_positions.append([wx, wy])
 
 # --- 2. 家具情報の入力 ---
 st.header("2. 家具の配置とサイズ (m) & レイアウト確認")
@@ -116,8 +119,10 @@ with col_preview:
         ax.add_patch(rect)
         ax.text(f['x'], f['y'], f['name'], ha='center', va='center', fontsize=6, fontweight='bold')
 
-    ax.plot([door_x], [door_y], 'rs', markersize=10, label="Door") 
-    ax.plot([win_x], [win_y], 'gs', markersize=10, label="Window")
+    for d in door_positions:
+        ax.plot(d[0], d[1], 'rs', markersize=10)
+    for w in window_positions:
+        ax.plot(w[0], w[1], 'gs', markersize=10)
 
     st.pyplot(fig, use_container_width=True)
     st.caption("🔴:ドア 🟢:窓")
@@ -132,8 +137,8 @@ if st.button("このレイアウトを診断する", type="primary"):
         "room": {
             "width": room_width,
             "depth": room_depth,
-            "door_positions": [[door_x, door_y]], # リスト形式で送る
-            "window_positions": [[win_x, win_y]]
+            "door_positions": door_positions,
+            "window_positions": window_positions
         },
         "placed_furniture_list": furniture_inputs
     }
