@@ -8,14 +8,13 @@ DIAGONAL_COST = np.sqrt(2)
 
 # --- ユーティリティ関数 ---
 
-def get_position_m(room: Room, position: str) -> np.ndarray:
-    """ドア/窓の位置文字列をメートル座標に変換 (簡略版)"""
-    if position == "CenterBottom":
-        return np.array([room.width / 2, 0.0])
-    if position == "CenterTop":
-        return np.array([room.width / 2, room.depth])
-    # ... (必要に応じて他の位置も追加可能)
-    return np.array([room.width / 2, 0.0])
+# 【変更】文字列ベースの判定を廃止し、Roomオブジェクトの座標を直接使うように変更
+# get_position_m 関数は不要になるため削除、または以下のように単純化します
+def get_door_pos(room: Room) -> np.ndarray:
+    return np.array([room.door_x, room.door_y])
+
+def get_window_pos(room: Room) -> np.ndarray:
+    return np.array([room.window_x, room.window_y])
 
 def get_furniture_facing_vector(furniture: PlacedFurniture, face: str = 'Front') -> np.ndarray:
     """家具の指定された面の方向ベクトルを取得 (簡略版)"""
@@ -128,7 +127,8 @@ def create_occupancy_grid(room: Room, placed_furniture_list: List[PlacedFurnitur
 def score_circulation(room: Room, placed_furniture_list: List[PlacedFurniture], grid: np.ndarray) -> float:
     """動線のスコア (ドアから主要家具までの最短経路)"""
     
-    door_pos_m = get_position_m(room, room.door_position)
+    # 【変更】スライダーで決めたドア座標を取得
+    door_pos_m = get_door_pos(room)
     circulation_scores = []
     
     # 評価対象: ベッド、デスク、ソファ
@@ -158,10 +158,10 @@ def score_circulation(room: Room, placed_furniture_list: List[PlacedFurniture], 
 
 def score_aesthetics(room: Room, placed_furniture_list: List[PlacedFurniture]) -> float:
     """美観・心理的快適性のスコア (窓やドアに対する向き)"""
-    # シンプルな実装のため、前のバージョンをそのまま利用
     aesthetics_scores = []
-    DOOR_CENTER = get_position_m(room, room.door_position)
-    WINDOW_CENTER = get_position_m(room, room.window_position)
+    # 【変更】スライダーで決めた座標を直接使用
+    DOOR_CENTER = get_door_pos(room)
+    WINDOW_CENTER = get_window_pos(room)
     
     # デスク評価
     desks = [f for f in placed_furniture_list if f.category == 'Desk']

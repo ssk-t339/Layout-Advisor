@@ -132,8 +132,8 @@ if st.button("このレイアウトを診断する", type="primary"):
         "room": {
             "width": room_width,
             "depth": room_depth,
-            "door_position": "CenterBottom",
-            "window_position": "CenterTop"
+            "door_positions": [[door_x, door_y]], # リスト形式で送る
+            "window_positions": [[win_x, win_y]]
         },
         "placed_furniture_list": furniture_inputs
     }

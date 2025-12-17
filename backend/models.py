@@ -7,8 +7,9 @@ import numpy as np
 class RoomInput(BaseModel):
     width: float
     depth: float
-    door_position: str = "CenterBottom"
-    window_position: str = "CenterTop"
+    # 文字列から、数値の座標リストに変更
+    door_positions: List[List[float]] # [[x, y], [x, y], ...]
+    window_positions: List[List[float]]
 
 class PlacedFurnitureInput(BaseModel):
     name: str
@@ -27,11 +28,14 @@ class DiagnosisRequest(BaseModel):
 # --- 2. 内部クラス (計算ロジック用) ---
 
 class Room:
-    def __init__(self, width: float, depth: float, door_position: str, window_position: str):
+    # 引数を座標(x, y)を受け取る形式に変更
+    def __init__(self, width: float, depth: float, door_x: float, door_y: float, window_x: float, window_y: float):
         self.width = width
         self.depth = depth
-        self.door_position = door_position
-        self.window_position = window_position
+        self.door_x = door_x
+        self.door_y = door_y
+        self.window_x = window_x
+        self.window_y = window_y
 
 class PlacedFurniture:
     def __init__(self, item: PlacedFurnitureInput):
