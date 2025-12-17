@@ -4,6 +4,16 @@ import requests
 import json
 import numpy as np
 
+import subprocess
+import time
+
+# バックエンドの自動起動（デプロイ環境用）
+if "backend_started" not in st.session_state:
+    # 既存のプロセスがあるか確認せずに起動を試みる
+    subprocess.Popen(["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"])
+    st.session_state.backend_started = True
+    time.sleep(3) # 起動を待つ
+
 # FastAPIサーバーのエンドポイントURL
 FASTAPI_URL = "http://127.0.0.1:8000/api/diagnose_layout"
 
