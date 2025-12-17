@@ -27,6 +27,21 @@ col_w, col_d = st.columns(2)
 room_width = col_w.slider("部屋の横幅 (Width)", 3.0, 8.0, 4.0, 0.1)
 room_depth = col_d.slider("部屋の奥行 (Depth)", 3.0, 8.0, 5.0, 0.1)
 
+st.markdown("🔧 **建具の位置設定** (壁沿いに配置してください)")
+c_door, c_win = st.columns(2)
+
+# ドアの位置（初期値：中央下）
+with c_door:
+    st.write("🚪 ドアの位置")
+    door_x = st.slider("ドア X座標", 0.0, room_width, room_width/2, 0.1)
+    door_y = st.slider("ドア Y座標", 0.0, room_depth, 0.0, 0.1)
+
+# 窓の位置（初期値：中央上）
+with c_win:
+    st.write("🪟 窓の位置")
+    win_x = st.slider("窓 X座標", 0.0, room_width, room_width/2, 0.1)
+    win_y = st.slider("窓 Y座標", 0.0, room_depth, room_depth, 0.1)
+
 # --- 2. 家具情報の入力 ---
 st.header("2. 家具の配置とサイズ (m) & レイアウト確認")
 
@@ -101,8 +116,8 @@ with col_preview:
         ax.add_patch(rect)
         ax.text(f['x'], f['y'], f['name'], ha='center', va='center', fontsize=6, fontweight='bold')
 
-    ax.plot([room_width/2], [0], 'rs', markersize=8) 
-    ax.plot([room_width/2], [room_depth], 'gs', markersize=8)
+    ax.plot([door_x], [door_y], 'rs', markersize=10, label="Door") 
+    ax.plot([win_x], [win_y], 'gs', markersize=10, label="Window")
 
     st.pyplot(fig, use_container_width=True)
     st.caption("🔴:ドア 🟢:窓")
