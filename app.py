@@ -16,9 +16,9 @@ if "backend_started" not in st.session_state:
 # FastAPIサーバーのエンドポイントURL
 FASTAPI_URL = "http://127.0.0.1:8000/api/diagnose_layout"
 
-st.set_page_config(page_title="AIレイアウト診断", layout="wide")
+st.set_page_config(page_title="レイアウト診断", layout="wide")
 
-st.title("AIルームレイアウト診断アドバイザー")
+st.title("ルームレイアウト診断アドバイザー")
 st.markdown("現在の家具配置を入力すると、動線・ゾーニング・美観の観点からスコアとアドバイスを提供します。")
 
 # --- 1. 部屋のサイズ入力 ---
