@@ -117,7 +117,8 @@ with col_preview:
             alpha=0.6, facecolor='#1f77b4', edgecolor='white'
         )
         ax.add_patch(rect)
-        ax.text(f['x'], f['y'], f['name'], ha='center', va='center', fontsize=6, fontweight='bold')
+        label_text = f"{f['category']}" # 例: Bed, Desk
+        ax.text(f['x'], f['y'], label_text, ha='center', va='center', fontsize=6, fontweight='bold')
 
     for d in door_positions:
         ax.plot(d[0], d[1], 'rs', markersize=10)
